@@ -16,12 +16,13 @@ function setup() {
 }
 
 function draw() {
-  background(230);
+  background(249, 248, 247);
 
   if (loading) {
 
     loadingCounter++;
     if (loadingCounter > 198) {
+      loadingCounter = 199;
       loading = false;
       pages.setPage("startPage");
     }
