@@ -69,8 +69,8 @@ $(document).ready(function(){
         }else{
             const move = movimentarAI()
             tabela[move.i][move.j] = COMPUTER_TOKEN;
-            $this = $('.col [data-i=' + move.i +'][data-j' + move.j + ']');
-            $this.html(COMPUTER_TOKEN);
+            $this = $('.col[data-i=' + move.i +'][data-j=' + move.j + ']');
+            $this.text(COMPUTER_TOKEN);
         }
     });
 });
