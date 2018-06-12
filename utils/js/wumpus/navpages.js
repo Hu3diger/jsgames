@@ -5,8 +5,8 @@ var wellcomeText = "Bem vindo ao jogo Hunt the Wumpus\n\nPara iniciar pressione 
 var img, font;
 
 function preload() {
-  img = loadImage('/utils/images/wumpus.png');
-  font = loadFont('/utils/fonts/ubunto/Ubuntu-Regular.ttf')
+  img = loadImage('/utils/images/wumpus.gif');
+  font = loadFont('/utils/fonts/8-bit/PressStart2P-Regular.ttf')
 }
 
 var NavPages = function() {
@@ -46,30 +46,30 @@ NavPages.prototype.updatePage = function() {
 NavPages.prototype.loadingPage = function() {
 
   imageMode(CENTER);
-  image(img, 180, height/2);
+  image(img, 180, height/2.5);
 
   fill(0);
-  textSize(28);
+  textSize(18);
   textFont(font);
-  textLeading(18);
+  textLeading(16);
   textAlign(LEFT);
-  text(theHunt, 300, 230);
+  text(theHunt, 270, 230);
 
   textSize(100);
   textAlign(CENTER);
   fill(0, 102, 153);
   text("WUMPUS", 400, 450);
 
-  fill(0);
+  fill(255);
   textSize(12);
-  text("Carregando", 400, 482);
+  text("Carregando", 400, 483.5);
 
 }
 
 NavPages.prototype.startPage = function() {
 
   fill(0);
-  textSize(28);
+  textSize(18);
   textFont(font);
   textLeading(18);
   textAlign(LEFT);
