@@ -3,56 +3,44 @@ const COMPUTER_TOKEN = 'O'
 const tabela = [
 	[' ', ' ', ' '],
 	[' ', ' ', ' '],
-	[' ', ' ', ' ']
+	[' ', ' ', ' '],
 ];
-function verifTermino() {
+function verifTermino(novaTabela) {
 	//verifica a horizontal
 	for (var i = 0; i < 3; i++) {
-		if (tabela[i][0] !== ' ' && tabela[i][0] === tabela[i][1] && tabela[i][0] === tabela[i][2]) {
-			return tabela[i][0];
+		if (novaTabela[i][0] !== ' ' && novaTabela[i][0] === novaTabela[i][1] && novaTabela[i][0] === novaTabela[i][2]) {
+			return novaTabela[i][0];
+		}else if (novaTabela[0][i] !== ' ' && novaTabela[0][i] === novaTabela[1][i] && novaTabela[0][i] === novaTabela[2][i]) {
+			return novaTabela[0][i];
 		}
 	}
-
-	//verifica a vertical
-	for (var j = 0; i < 3; i++) {
-		if (tabela[0][j] !== ' ' && tabela[0][j] === tabela[1][j] && tabela[0][j] === tabela[2][j]) {
-			return tabela[0][j];
-		}
-	}
-
 	//verifica a diagonal - cima esquerda -> baixo direita
-	if (tabela[0][0] !== ' ' && tabela[0][0] === tabela[1][1] && tabela[0][0] === tabela[2][2]) {
-		return tabela[0][0];
+	if (novaTabela[0][0] !== ' ' && novaTabela[0][0] === novaTabela[1][1] && novaTabela[0][0] === novaTabela[2][2]) {
+		return novaTabela[0][0];
 	}
-
 	//verifica a diagonal - baixo esquerda -> cima direita
-	if (tabela[2][0] !== ' ' && tabela[2][0] === tabela[1][1] && tabela[2][0] === tabela[0][2]) {
-		return tabela[2][0];
+	if (novaTabela[2][0] !== ' ' && novaTabela[2][0] === novaTabela[1][1] && novaTabela[2][0] === novaTabela[0][2]) {
+		return novaTabela[2][0];
 	}
 
-	for (var i = 0; i < 3; i++) {
-		for (var j = 0; j < 3; j++) {
-			if (tabela[i][j] === ' ') {
-				return false;
-			}
-		}
-	}
+	// console.log(novaTabela[0].includes(' '));
+	if (novaTabela[0].includes(' ') || novaTabela[1].includes(' ') || novaTabela[2].includes(' ')) return false;
 
 	return null;
 }
 
 function minmax(nTabela, depth, jogador) {
-	const gameState = verifTermino(nTabela);
+	let gameState = verifTermino(nTabela);
 
 	if (gameState === false) {
-		const valores = [];
+		let valores = [];
 
 		for (var i = 0; i < 3; i++) {
 			for (var j = 0; j < 3; j++) {
-				const tabelaCopia = _.cloneDeep(nTabela);
-				if (tabelaCopia[i][j] !== ' ') continue;
+				let tabelaCopia = _.cloneDeep(nTabela);
+				if (nTabela[i][j] !== " ") continue;
 				tabelaCopia[i][j] = jogador;
-				const valor = minmax(tabelaCopia, depth + 1, (jogador === PLAYER_TOKEN) ? COMPUTER_TOKEN : PLAYER_TOKEN);
+				let valor = minmax(tabelaCopia, depth + 1, (jogador === PLAYER_TOKEN) ? COMPUTER_TOKEN : PLAYER_TOKEN)
 				valores.push({
 					cost: valor,
 					cell: {
@@ -62,9 +50,8 @@ function minmax(nTabela, depth, jogador) {
 				});
 			}
 		}
-
 		if(jogador === COMPUTER_TOKEN){
-			const max = _.maxBy(valores, (v) => {
+			let max = _.maxBy(valores, (v) => {
 				return v.cost;
 			});
 			if(depth === 0){
@@ -73,7 +60,7 @@ function minmax(nTabela, depth, jogador) {
 					return max.cost;
 			}
 		} else {
-			const min = _.minBy(valores, (v) => {
+			let min = _.minBy(valores, (v) => {
 				return v.cost;
 			});
 			if (depth === 0) {
@@ -105,7 +92,7 @@ $(document).ready(function () {
 		const j = $this.data('j');
 		tabela[i][j] = PLAYER_TOKEN;
 
-		let gameState = verifTermino();
+		let gameState = verifTermino(tabela);
 		if (gameState) {
 			alert('Ganhador = ' + gameState);
 		} else {
