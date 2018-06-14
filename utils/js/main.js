@@ -14,7 +14,15 @@
 	
 	$tabela.addEventListener('click', function(e){
 		console.log(e.target);
-		addQueenImageToTableCell(e.target);
+		let elemet = document.getElementsByTagName("img")[0];
+		if(void 0 !== elemet) {
+			if(e.target !== elemet && !elemet.contains(e.target)) addQueenAndInsertToTableCell(e.target);
+			else console.log("Sou uma img");
+		}else if(e.target) {
+			addQueenAndInsertToTableCell(e.target);
+		}
+			
+		
 	});
 	
 	function padrao(){
@@ -29,20 +37,13 @@
 		
 	}
 
-	function addQueenImageToTableCell(celula) {
+	function addQueenAndInsertToTableCell(celula) {
 		var queenImage = document.createElement('img');
 		queenImage.src = "utils/images/queen.png";
 		queenImage.classList.add("queen");
-		queenImage.style.width='50px';
-		queenImage.style.height='50px';
-		if (celula.hasChildNodes()) {
-			console.log("Removendo filho");
-			celula.removeChild(celula.lastChild);
-			debugger;
-		} else {
-			console.log("Adicionando filho");
-			celula.appendChild(queenImage);
-		}
+		queenImage.style.width='100%'; //td é relativo a viewport e a imagem é relativa a td - BUG - Queen stack bug
+		queenImage.style.height='100%';
+		celula.appendChild(queenImage);
 	}
 }
 
