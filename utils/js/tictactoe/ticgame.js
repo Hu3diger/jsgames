@@ -5,6 +5,14 @@ const tabela = [
 	[' ', ' ', ' '],
 	[' ', ' ', ' '],
 ];
+function changeAlgo() {
+	$(".load").css({display: 'none'});
+	$(".joga").css({display: 'block'});
+}
+$(document).ready(function () {
+
+	setTimeout(changeAlgo, 15000);
+
 function verifTermino(novaTabela) {
 	//verifica a horizontal
 	for (var i = 0; i < 3; i++) {
@@ -84,22 +92,42 @@ function movimentarAI() {
 
 }
 
-$(document).ready(function () {
+function reiniciar(){
+	for(var i=0;i<3;i++){
+		for(var j=0;j<3;j++){
+			tabela[i][j] = ' ';
+			$('.col[data-i=' + i + '][data-j=' + j + ']').html(' ');
+		}
+	}
+	console.log(tabela);
+}
+	$('#reset').click(function(){
+		reiniciar();
+	 });
+
 	$('.col').click(function () {
 		$this = $(this);
 		$this.html(PLAYER_TOKEN);
-		const i = $this.data('i');
-		const j = $this.data('j');
+		let i = $this.data('i');
+		let j = $this.data('j');
+		if(tabela[i][j].includes('X') || tabela[i][j].includes('O')){
+			alert('Jogada impossível');
+		}else{
 		tabela[i][j] = PLAYER_TOKEN;
-
 		let gameState = verifTermino(tabela);
-		if (gameState) {
-			alert('Ganhador = ' + gameState);
-		} else {
-			const move = movimentarAI()
-			tabela[move.i][move.j] = COMPUTER_TOKEN;
-			$this = $('.col[data-i=' + move.i + '][data-j=' + move.j + ']');
-			$this.text(COMPUTER_TOKEN);
+			if(gameState){
+				alert('Ganhador = ' + gameState);
+			} else if(gameState === null){
+				alert('Que pena... Deu velha');
+			} else {
+				let move = movimentarAI()
+				tabela[move.i][move.j] = COMPUTER_TOKEN;
+				$this = $('.col[data-i=' + move.i + '][data-j=' + move.j + ']');
+				$this.text(COMPUTER_TOKEN);
+				if(verifTermino(tabela)){
+					alert('Ganhador = CPU');
+				}
+			}
 		}
 	});
 });
