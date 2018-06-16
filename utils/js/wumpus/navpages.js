@@ -5,7 +5,7 @@ var wellcomeText = "Bem vindo ao jogo Hunt the Wumpus\n\nPara iniciar pressione 
 var img, font;
 var charUp, charLeft, charDown, charRigth;
 function preload() {
-  img = loadImage('../images/wumpus.gif');
+  img = loadImage('~/utils/images/wumpus.gif');
   font = loadFont('../fonts/8-bit/PressStart2P-Regular.ttf')
 
   // charUp = loadImage('/utils/images/wumpus/player_facing_to_up.png');
