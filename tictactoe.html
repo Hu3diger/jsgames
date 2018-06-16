@@ -1,90 +1,78 @@
-
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>TicTacToe Game</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Styles -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- <link rel="stylesheet" type="text/css" media="screen" href="utils/css/fonts.css" /> -->
-    <link rel="stylesheet" type="text/css" media="screen" href="utils/css/materialize.min.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="utils/css/tictactoe.css" />
-  </head>
-    <body>
-        <!-- Page Content -->
 
-      <!-- preloading section -->
-      <div class="content load">
-        <div class="row">
-          <div class="col s12 m6 offset-m3 center margin">
-          <div class="preloader-wrapper big active">
-              <div class="spinner-layer spinner-blue">
-                <div class="circle-clipper left">
-                  <div class="circle"></div>
-                </div><div class="gap-patch">
-                  <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                  <div class="circle"></div>
-                </div>
-              </div>
-              <div class="spinner-layer spinner-red">
-                <div class="circle-clipper left">
-                  <div class="circle"></div>
-                </div><div class="gap-patch">
-                  <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                  <div class="circle"></div>
-                </div>
-              </div>
-              <div class="spinner-layer spinner-yellow">
-                <div class="circle-clipper left">
-                  <div class="circle"></div>
-                </div><div class="gap-patch">
-                  <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                  <div class="circle"></div>
-                </div>
-              </div>
-              <div class="spinner-layer spinner-green">
-                <div class="circle-clipper left">
-                  <div class="circle"></div>
-                </div><div class="gap-patch">
-                  <div class="circle"></div>
-                </div><div class="circle-clipper right">
-                  <div class="circle"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          </div>
-        </div>
-        <!-- end of preloading -->
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>TicTacToe Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Styles -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+  <!-- <link rel="stylesheet" type="text/css" media="screen" href="utils/css/fonts.css" /> -->
+  <link rel="stylesheet" type="text/css" media="screen" href="utils/css/materialize.min.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="utils/css/tictactoe.css" />
+</head>
 
-        <div class="container margin joga">
-          <div class="row">
-            <div class="col colz s3 m3 z-depth-5" data-i=0 data-j=0></div>
-            <div class="col colz s3 m3 z-depth-5" data-i=0 data-j=1 ></div>
-            <div class="col colz s3 m3 z-depth-5" data-i=0 data-j=2 ></div>
-          </div>
-          <div class="row">
-            <div class="col colz s3 m3 z-depth-5" data-i=1 data-j=0 ></div>
-            <div class="col colz s3 m3 z-depth-5" data-i=1 data-j=1 ></div>
-            <div class="col colz s3 m3 z-depth-5" data-i=1 data-j=2 ></div>
-          </div>
-          <div class="row">
-            <div class="col colz s3 m3 z-depth-5" data-i=2 data-j=0 ></div>
-            <div class="col colz s3 m3 z-depth-5" data-i=2 data-j=1 ></div>
-            <div class="col colz s3 m3 z-depth-5" data-i=2 data-j=2 ></div>
-          </div>
-          <a class="waves-effect waves-light btn blue" id="reset"><i class="material-icons left">refresh</i>RESETAR</a>
-          <a class="waves-effect waves-light btn red" href="index.html"><i class="material-icons left">arrow_back</i>VOLTAR</a>
+<body>
+  <!-- Page Content -->
+
+  <!-- preloading section -->
+  <div class="content load" id="mt">
+    <div class="row">
+      <div class="col s12 m6 offset-m3 center margin">
+        <div class="progress">
+          <div class="indeterminate"></div>
         </div>
-        <!-- JS In end of the body to optimized loading -->
-        <script src="utils/js/lodash.min.js"></script>
-        <script src="utils/js/jquery-3.3.1.min.js"></script>
-        <script src="utils/js/materialize.min.js"></script>
-        <script src="utils/js/tictactoe/ticgame.js"></script>
-    </body>
+      </div>
+      <div class="row">
+        <div class="col s12 m6 offset-m3 center">
+          <p id="loading">{{'loading'|i18n}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end of preloading -->
+
+  <div class="content joga">
+    <div class="row">
+      <div class="col s12 m8 offset-m2 center pacific">
+        <h3 id="title">Tic Tac Toe</h3>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row ">
+        <div class="col colz s3 m3 z-depth-5 offset-m1 offset-s1" data-i=0 data-j=0></div>
+        <div class="col colz s3 m3 z-depth-5" data-i=0 data-j=1></div>
+        <div class="col colz s3 m3 z-depth-5" data-i=0 data-j=2></div>
+      </div>
+      <div class="row">
+        <div class="col colz s3 m3 z-depth-5 offset-m1 offset-s1" data-i=1 data-j=0></div>
+        <div class="col colz s3 m3 z-depth-5" data-i=1 data-j=1></div>
+        <div class="col colz s3 m3 z-depth-5" data-i=1 data-j=2></div>
+      </div>
+      <div class="row">
+        <div class="col colz s3 m3 z-depth-5 offset-m1 offset-s1" data-i=2 data-j=0></div>
+        <div class="col colz s3 m3 z-depth-5" data-i=2 data-j=1></div>
+        <div class="col colz s3 m3 z-depth-5" data-i=2 data-j=2></div>
+      </div>
+      <div class="row">
+        <div class="col s6 m4 offset-m1">
+          <a class="waves-effect waves-light btn blue left" id="reset">
+            <i class="material-icons left">refresh</i>RESET</a>
+        </div>
+        <div class="col s6 m4 offset-m1">
+            <a href="index.html" class="waves-effect waves-light btn red right" id="reset">
+              <i class="material-icons left">arrow_back</i>BACK</a>
+          </div>
+      </div>
+    </div>
+  </div>
+  <!-- JS In end of the body to optimized loading -->
+  <script src="utils/js/lodash.min.js"></script>
+  <script src="utils/js/jquery-3.3.1.min.js"></script>
+  <script src="utils/js/materialize.min.js"></script>
+  <script src="utils/js/tictactoe/ticgame.js"></script>
+</body>
+
 </html>
