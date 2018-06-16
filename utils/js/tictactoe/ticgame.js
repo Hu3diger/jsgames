@@ -11,7 +11,7 @@ function changeAlgo() {
 }
 $(document).ready(function () {
 
-	setTimeout(changeAlgo, 15000);
+	setTimeout(changeAlgo, 1);
 
 function verifTermino(novaTabela) {
 	//verifica a horizontal
