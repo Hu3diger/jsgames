@@ -7,22 +7,26 @@
 	todos j*/
 	
 	var posicaoSelecionada;
+	var cell;
 	var $tabela = document.getElementsByTagName("tbody")[0];
 	var $rows = document.getElementsByTagName("tr");
 	var $cols = document.getElementsByTagName("td");
 	var $peca = document.createElement("img");
 	
-	$tabela.addEventListener('click', function(e){
-		console.log(e.target);
-		let elemet = document.getElementsByTagName("img")[0];
-		if(void 0 !== elemet) {
-			if(e.target !== elemet && !elemet.contains(e.target)) addQueenAndInsertToTableCell(e.target);
-			else console.log("Sou uma img");
-		}else if(e.target) {
-			addQueenAndInsertToTableCell(e.target);
+	$tabela.addEventListener('click', function(e){	
+		if(void 0 !== e.target.parentNode){
+			if (void 0 === e.target.childNodes[0]){
+				if(!(e.target.nodeName=="IMG")){
+					console.log("Adicionando primeira rainha");
+					addQueenAndInsertToTableCell(e.target);
+				} else {
+					console.log("Removendo: "+e.target.nodeName);
+					e.target.remove(); //Para IE -> e.target.parentNode.removeChild(e.target.parentNode.lastChild);
+				}
+			} else if(!(e.target.parentElement.nodeName!=="TR" || e.target.childNodes[0].nodeName=="IMG")){ //clique dentro da td
+				console.log("Erro no campo selecionado");
+			}
 		}
-			
-		
 	});
 	
 	function padrao(){
@@ -37,14 +41,15 @@
 		
 	}
 
-	function addQueenAndInsertToTableCell(celula) {
+	function addQueenAndInsertToTableCell(cell) {
 		var queenImage = document.createElement('img');
 		queenImage.src = "utils/images/queen.png";
 		queenImage.classList.add("queen");
-		queenImage.style.width='100%'; //td é relativo a viewport e a imagem é relativa a td - BUG - Queen stack bug
-		queenImage.style.height='100%';
-		celula.appendChild(queenImage);
+		queenImage.style.width='80%';
+		queenImage.style.height='85%';
+		cell.appendChild(queenImage);
 	}
+	
 }
 
 )();
