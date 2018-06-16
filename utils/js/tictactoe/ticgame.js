@@ -13,7 +13,6 @@ function loadTxt(){
 	$("#loading").html("The game is still loading...");
 }
 $(document).ready(function () {
-
 	setTimeout(load, 5000);
 	setTimeout(loadTxt, 1500);
 
