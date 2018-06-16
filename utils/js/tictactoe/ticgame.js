@@ -34,7 +34,6 @@ $(document).ready(function () {
 			return novaTabela[2][0];
 		}
 
-		// console.log(novaTabela[0].includes(' '));
 		if (novaTabela[0].includes(' ') || novaTabela[1].includes(' ') || novaTabela[2].includes(' ')) return false;
 
 		return null;
@@ -102,7 +101,6 @@ $(document).ready(function () {
 				$('.colz[data-i=' + i + '][data-j=' + j + ']').html(' ');
 			}
 		}
-		console.log(tabela);
 	}
 	$('#reset').click(function () {
 		reiniciar();
