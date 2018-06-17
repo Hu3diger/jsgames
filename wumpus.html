@@ -7,7 +7,7 @@
     <title>Hunt the Wumpus</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Styles -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
     <!-- <link rel="stylesheet" type="text/css" media="screen" href="utils/css/fonts.css" /> -->
     <link rel="stylesheet" type="text/css" media="screen" href="utils/css/materialize.min.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="utils/css/wumpus.css" />
@@ -15,6 +15,16 @@
   </head>
 
   <body>
+    <!-- Modal Buraco -->
+    <div id="modal1" class="modal">
+     <div class="modal-content">
+       <h4 id="modalTitle"></h4>
+       <p id="textModal"></p>
+     </div>
+     <div class="modal-footer">
+       <a href="#!" class="modal-close waves-effect waves-green btn-flat reset">Reiniciar</a>
+     </div>
+    </div>
   </body>
 
 
@@ -22,7 +32,7 @@
   <script src="utils/js/materialize.min.js"></script>
   <script src="utils/js/p5.min.js"></script>
   <script src="utils/js/wumpus/NavPages.js"></script>
-  <script src="utils/js/wumpus/Cell.js"></script>
   <script src="utils/js/wumpus/Char.js"></script>
   <script src="utils/js/wumpus/wumpusGame.js"></script>
+  <script src="utils/js/wumpus/Cell.js"></script>
 </html>
