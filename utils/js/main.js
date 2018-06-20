@@ -19,6 +19,9 @@
 				if(!(e.target.nodeName=="IMG")){
 					console.log("Adicionando primeira rainha");
 					addQueenAndInsertToTableCell(e.target);
+					//e.target -> td
+					console.log(e.target);
+					estilizarColunas(e.target);
 				} else {
 					console.log("Removendo: "+e.target.nodeName);
 					e.target.remove(); //Para IE -> e.target.parentNode.removeChild(e.target.parentNode.lastChild);
@@ -29,18 +32,34 @@
 		}
 	});
 	
-	function padrao(){
+	function estilizarColunas(colunaSelecionada){
+		colunas = colunaSelecionada.parentElement.children;
 		
+		for(var i=0;i<colunas.length;i++){
+			colunas[i].style.background = 'yellow';
+			if(colunaSelecionada === colunas[i]){
+				estilizarLinhas(i);
+			}
+		}
 	}
 	
-	function base(){
+	function estilizarLinhas(index){
+		//console.log(document.getElementsByTagName("td"));
+		for(var i=0;i<64-index;i=i+8){
+			//console.log(document.getElementsByTagName("td")[index+i]);
+			document.getElementsByTagName("td")[index+i].style.background = 'yellow';
+		}
+		estilizarDiagonal(index);
+	}
+	/*
+	function estilizarDiagonal(index){
+		console.log(document.getElementsByTagName("td"));
+		for(var i=0;i<64-index;i=i+9){
+			document.getElementsByTagName("td")[index+i].style.background = 'yellow';
+		}
 		
 	}
-	
-	function pontas(){
-		
-	}
-
+*/
 	function addQueenAndInsertToTableCell(cell) {
 		var queenImage = document.createElement('img');
 		queenImage.src = "utils/images/queen.png";
