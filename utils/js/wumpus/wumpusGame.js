@@ -78,10 +78,12 @@ function resetGame() {
 
   row = floor(width / w);
   col = floor(height / w);
+	
+
   let useWumpus = false;
   let wumpusUsed = false;
   let hole;
-
+	grid = [];
   for (var x = 0; x < row; x++) {
     for (var y = 0; y < col; y++) {
 
