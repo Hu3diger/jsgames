@@ -22,6 +22,7 @@
 					//e.target -> td
 					console.log(e.target);
 					estilizarColunas(e.target);
+					estilizarDiagonal(e.target);
 				} else {
 					console.log("Removendo: "+e.target.nodeName);
 					e.target.remove(); //Para IE -> e.target.parentNode.removeChild(e.target.parentNode.lastChild);
@@ -34,7 +35,6 @@
 	
 	function estilizarColunas(colunaSelecionada){
 		colunas = colunaSelecionada.parentElement.children;
-		
 		for(var i=0;i<colunas.length;i++){
 			colunas[i].style.background = 'yellow';
 			if(colunaSelecionada === colunas[i]){
@@ -51,15 +51,35 @@
 		}
 		estilizarDiagonal(index);
 	}
-	/*
-	function estilizarDiagonal(index){
-		console.log(document.getElementsByTagName("td"));
-		for(var i=0;i<64-index;i=i+9){
-			document.getElementsByTagName("td")[index+i].style.background = 'yellow';
+	
+	function estilizarDiagonal(elementoSelecionado){
+		var x = new Array(8);
+		var aux = 0;
+		var elemento = elementoSelecionado;
+		var iE = 0;
+		var jE = 0;
+		var arr;
+		var j
+		for(var i=0;i<8;i++){
+			x[i] = new Array(8);
+			for(j=0;j<8;j++){
+				if(elemento===document.getElementsByTagName("td")[aux]){
+					iE = i;
+					jE = j;
+					var a;
+					while(document.getElementsByTagName("td")[aux+i] !== void 0 && document.getElementsByTagName("td")[aux+j] !== void 0){
+						console.log("i(" +i +")"+document.getElementsByTagName("td")[aux+i]);
+						console.log("j(" +j +")"+document.getElementsByTagName("td")[aux+j]);
+						i++;
+						j--;
+					}
+				}
+				aux++;
+			}
 		}
 		
 	}
-*/
+
 	function addQueenAndInsertToTableCell(cell) {
 		var queenImage = document.createElement('img');
 		queenImage.src = "utils/images/queen.png";
