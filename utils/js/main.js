@@ -17,7 +17,7 @@
 	}
 
 	document.addEventListener("DOMContentLoaded", function(){
-		document.getElementsByTagName("body")[0].style.background = 'white';
+		document.getElementsByTagName("body")[0].style.background = '#81F499';
 		criarTabela();
 		inicializarTabela();
 	});
