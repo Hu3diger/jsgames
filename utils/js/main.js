@@ -1,92 +1,193 @@
 (function(){
-	/*Diagonal
-	i+1 ou i-1 e j+2 ou j-2
-	YO FRONTE MEIN
-	todos i
-	Lados
-	todos j*/
+	/*
+	Refatorado para construtor, pois a remoção das linhas
+	removia as anteriores.
+	*/
 	
 	var posicaoSelecionada;
-	var cell;
-	var $tabela = document.getElementsByTagName("tbody")[0];
-	var $rows = document.getElementsByTagName("tr");
-	var $cols = document.getElementsByTagName("td");
-	var $peca = document.createElement("img");
+	var quadrados;
+	var rows = 8;
+	var cols = 8;
+	var rainha = document.createElement("img");
 	
-	$tabela.addEventListener('click', function(e){	
-		if(void 0 !== e.target.parentNode){
-			if (void 0 === e.target.childNodes[0]){
-				if(!(e.target.nodeName=="IMG")){
-					console.log("Adicionando primeira rainha");
-					addQueenAndInsertToTableCell(e.target);
-					//e.target -> td
-					console.log(e.target);
-					estilizarColunas(e.target);
-					estilizarDiagonal(e.target);
-				} else {
-					console.log("Removendo: "+e.target.nodeName);
-					e.target.remove(); //Para IE -> e.target.parentNode.removeChild(e.target.parentNode.lastChild);
-				}
-			} else if(!(e.target.parentElement.nodeName!=="TR" || e.target.childNodes[0].nodeName=="IMG")){ //clique dentro da td
-				console.log("Erro no campo selecionado");
-			}
-		}
+	document.addEventListener("DOMContentLoaded", function() {
+		criarTabela();
+		inicializarTabela();
 	});
 	
-	function estilizarColunas(colunaSelecionada){
-		colunas = colunaSelecionada.parentElement.children;
-		for(var i=0;i<colunas.length;i++){
-			colunas[i].style.background = 'yellow';
-			if(colunaSelecionada === colunas[i]){
-				estilizarLinhas(i);
-			}
+	function criarTabela(){
+		quadrados = new Array(rows);
+		for (var coluna = 0; coluna < cols; coluna++) { //i
+			quadrados[coluna] = new Array(rows);
 		}
 	}
 	
-	function estilizarLinhas(index){
-		//console.log(document.getElementsByTagName("td"));
-		for(var i=0;i<64-index;i=i+8){
-			//console.log(document.getElementsByTagName("td")[index+i]);
-			document.getElementsByTagName("td")[index+i].style.background = 'yellow';
-		}
-		estilizarDiagonal(index);
-	}
-	
-	function estilizarDiagonal(elementoSelecionado){
-		var x = new Array(8);
-		var aux = 0;
-		var elemento = elementoSelecionado;
-		var iE = 0;
-		var jE = 0;
-		var arr;
-		var j
-		for(var i=0;i<8;i++){
-			x[i] = new Array(8);
-			for(j=0;j<8;j++){
-				if(elemento===document.getElementsByTagName("td")[aux]){
-					iE = i;
-					jE = j;
-					var a;
-					while(document.getElementsByTagName("td")[aux+i] !== void 0 && document.getElementsByTagName("td")[aux+j] !== void 0){
-						console.log("i(" +i +")"+document.getElementsByTagName("td")[aux+i]);
-						console.log("j(" +j +")"+document.getElementsByTagName("td")[aux+j]);
-						i++;
-						j--;
-					}
+	function inicializarTabela(){	
+		var tabela = document.getElementById("jogo");
+		//tabela.innerHTML = null;
+		for (var y = 0; y < rows; y++) {
+			var tabelaRow = document.createElement("tr");
+			for (var x = 0; x < cols; x++) {
+				var tabelaCell = document.createElement("td");
+				// Resgistrar aoCliqueDoQuadrado() função para ativar ao clique
+				tabelaCell.addEventListener("click", aoCliqueDoQuadrado);
+				if ((y % 2) === (x % 2)) {
+					tabelaCell.className = "branco";
+				} else {
+					tabelaCell.className = "preto";
 				}
-				aux++;
+				tabelaRow.appendChild(tabelaCell);
+				quadrados[x][y] = new Quadrados(x, y, tabelaCell);
 			}
+			tabela.appendChild(tabelaRow);
 		}
-		
-	}
-
-	function addQueenAndInsertToTableCell(cell) {
+	};
+	
+	function addRainhaTabelaCell(cell) {
 		var queenImage = document.createElement('img');
 		queenImage.src = "utils/images/queen.png";
 		queenImage.classList.add("queen");
-		queenImage.style.width='80%';
-		queenImage.style.height='85%';
+		queenImage.style.width='100%';
+		queenImage.style.height='100%';
 		cell.appendChild(queenImage);
+	}
+	
+	function removerRainhaTabelaCell(cell){ //Verificar hasChild da IMG
+		while(cell.hasChildNodes()){
+			cell.removeChild(cell.lastChild);
+		}
+	}
+	
+	function Quadrados(cols, rows, tabelaCell){
+		this.rows = rows;
+		this.cols = cols;
+		this.temRainha = false;
+		this.tabelaCell = tabelaCell;
+		this.dominado = 0; //Verificar parametro
+	}
+	
+	function aoCliqueDoQuadrado() {
+	var cols = this.cellIndex;
+	var rows = this.parentNode.rowIndex;
+	
+	var square = quadrados[cols][rows]; //Posicao da Rainha
+	if (square.temRainha) { 			//Modo remover (quadrado, bool)
+		square.temRainha = false;
+		//rainhasUtilizadas--;
+		removerRainhaTabelaCell(square.tabelaCell);
+		setQuadradosDominados(square, true);
+	} else { 							//Adicionar
+		square.temRainha = true;
+		//rainhasUtilizadas++;
+		addRainhaTabelaCell(square.tabelaCell);
+		setQuadradosDominados(square);
+	}
+	//updateQueensUsedHTML();
+	if (verificarSolucao()) {
+		//updateBest();
+		jaFinalizou = true;
+		}
+	}
+	
+	
+	function setQuadradosDominados(posicaoRainha, remove = false) {
+		
+	//Mesma linha
+	for (var column = 0; column < cols; column++) {
+		if (remove) {
+			quadrados[column][posicaoRainha.rows].dominado--;
+		} else {
+			quadrados[column][posicaoRainha.rows].dominado++;
+		}
+	}
+	//Mesma coluna
+	for (var row = 0; row < rows; row++) {
+		if (remove) {
+			quadrados[posicaoRainha.cols][row].dominado--;
+		} else {
+			quadrados[posicaoRainha.cols][row].dominado++;
+		}
+	}
+	// Diagonal tras direita
+	var row = posicaoRainha.rows;
+	var column = posicaoRainha.cols;
+	while (row < rows && column < cols) {
+		if (remove) {
+			quadrados[column][row].dominado--;
+		} else {
+			quadrados[column][row].dominado++;
+		}
+		row++;
+		column++;
+	}
+	// Diagonais frente esquerda
+	row = posicaoRainha.rows;
+	column = posicaoRainha.cols;
+	while (row >= 0 && column >= 0) {
+		if (remove) {
+			quadrados[column][row].dominado--;
+		} else {
+			quadrados[column][row].dominado++;
+		}
+		row--;
+		column--;
+	}
+	// Diagonal tras esquerda
+	row = posicaoRainha.rows;
+	column = posicaoRainha.cols;
+	while (row >= 0 && column < cols) {
+		if (remove) {
+			quadrados[column][row].dominado--;
+		} else {
+			quadrados[column][row].dominado++;
+		}
+		row--;
+		column++;
+	}
+	// Diagonais frente direita
+	row = posicaoRainha.rows;
+	column = posicaoRainha.cols;
+	while (row < rows && column >= 0) {
+		if (remove) {
+			quadrados[column][row].dominado--;
+		} else {
+			quadrados[column][row].dominado++;
+		}
+		row++;
+		column--;
+	}
+	// Rainha sobre ela mesma
+	if (remove) {
+		posicaoRainha.dominado += 5
+	} else {
+		posicaoRainha.dominado -= 5;
+	}
+	atualizarQuadradosDominados();
+}
+
+function atualizarQuadradosDominados() {
+	for (var row = 0; row < quadrados.length; row++) {
+		for (var column = 0; column < quadrados[row].length; column++) {
+			if (quadrados[row][column].dominado > 0) {
+				quadrados[row][column].tabelaCell.classList.add("dominado");
+			} else {
+				quadrados[row][column].tabelaCell.classList.remove("dominado");
+			}
+		}
+	}
+}
+
+
+	function verificarSolucao(){
+		for(var col = 0;col<cols;col++){
+			for(var row=0;row<rows;row++){
+				var quadrado = quadrados[col][row];
+				if (!(quadrado.dominado > 0)) {
+					return false;
+				}
+			}
+		}
+		return true; //
 	}
 	
 }
