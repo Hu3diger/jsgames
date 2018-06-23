@@ -7,7 +7,8 @@
     <title>Hunt the Wumpus</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Styles -->
-    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
     <!-- <link rel="stylesheet" type="text/css" media="screen" href="utils/css/fonts.css" /> -->
     <link rel="stylesheet" type="text/css" media="screen" href="utils/css/materialize.min.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="utils/css/wumpus.css" />
@@ -25,6 +26,34 @@
         <a href="#!" class="modal-close waves-effect waves-green btn-flat reset">Reiniciar</a>
       </div>
     </div>
+    <div class="container">
+      <div class="row">
+        <div class="col l12" id="canvas"></div>
+      </div>
+
+      <div class="row white">
+        <div class="col s2 l2">
+          <a href="index.html" class="waves-effect waves-light btn red right" id="reset">
+            <i class="material-icons left">arrow_back</i>BACK
+          </a>
+        </div>
+        <div class="col s2 l3 arrow-img">
+          <img src="/utils/images/wumpus/arrow.png" />
+          <span class="arrow-number">0</span>
+        </div>
+
+        <div class="col s2 l3 flow-text clue">
+          Dica: <span class="clue-text">Carregando</span>
+        </div>
+
+        <div class="col l3 keys">
+          <span>Movimenta o Jogador</span><br />
+          <img src="/utils/images/wumpus/arrow_keys.gif">
+          <br /><span>Atira</span>
+        </div>
+      </div>
+    </div>
+
   </body>
 
 

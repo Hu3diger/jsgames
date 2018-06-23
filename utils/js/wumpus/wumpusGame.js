@@ -13,17 +13,21 @@ var char;
 var current;
 var lose = false;
 
+var numberOfArrow = 2;
+
 $().ready(function() {
   $(".modal").modal();
 
   $(".reset").on("click", function() {
     resetGame()
   });
+
 });
 
 function setup() {
   /* Create the canvas to draw */
-  createCanvas(801, 501);
+  let myCanvas = createCanvas(801, 501);
+  myCanvas.parent('canvas')
   resetGame();
 }
 
@@ -67,6 +71,7 @@ function draw() {
       }
     }
 
+    getClue();
     char.showChar();
 
   }
@@ -75,10 +80,13 @@ function draw() {
 
 function resetGame() {
   lose = false;
+  numberOfArrow = 2;
+  $(".arrow-number").text(numberOfArrow);
+  $(".modal").modal("close");
 
   row = floor(width / w);
   col = floor(height / w);
-	
+
 
   let useWumpus = false;
   let wumpusUsed = false;
@@ -114,7 +122,9 @@ function resetGame() {
 
 function keyPressed() {
 
-  if (gameStarted === false) {
+  if (numberOfArrow == 0 && numberOfArrow != 2 && keyCode == 32 || lose == true) {
+    resetGame();
+  }else if (gameStarted === false) {
     pages.setPage("loading");
     gameStarted = true;
     loading = true;
@@ -146,6 +156,7 @@ function keyPressed() {
       }
     }
 
+
     let charX = floor(char.x / 2);
     let charY = floor(char.y / 2);
 
@@ -168,6 +179,25 @@ function keyPressed() {
   }
 }
 
+
+function getClue() {
+  let x = floor(char.x / 2);
+  let y = floor(char.y / 2);
+
+  let cellPos = grid[index(x, y)];
+
+  let text = "Não se preucupe";
+
+  if (cellPos) {
+    if (cellPos.closeWumpus)    text = "Próximo ao wumpus";
+    else if (cellPos.closeHole) text = "Próximo a um buraco";
+    else if (cellPos.hasWumpus) text = "Wumpus te pegou";
+    else if (cellPos.hasHole)   text = "Caiu em um buraco";
+  }
+
+  $(".clue-text").text(text);
+}
+
 function shoot(dir) {
   let x = floor(char.x / 2);
   let y = floor(char.y / 2);
@@ -176,6 +206,9 @@ function shoot(dir) {
   let left    = grid[index(x - 1, y    )];
   let rigth   = grid[index(x + 1, y    )];
   let bottom  = grid[index(x    , y + 1)];
+
+  if (numberOfArrow > 0) numberOfArrow--;
+  $(".arrow-number").text(numberOfArrow);
 
   let win = false;
 
@@ -192,18 +225,20 @@ function shoot(dir) {
     if (rigth && rigth.hasWumpus) win = true;
   }
 
-  lose = true;
   if (win == true) {
-    $("#modalTitle").html("Você ganhow!");
+    lose = true;
+    $("#modalTitle").html("Você ganhou!");
     $("#textModal").html("Acertou o wumpus em cheio");
     $("#modal1").modal("open");
     return false;
   }
 
-  $("#modalTitle").html("Você perdeu!");
-  $("#textModal").html("O local onde você atirou a flecha não possuia um Wumpus");
+  if (numberOfArrow == 0) {
+    $("#modalTitle").html("Você perdeu!");
+    $("#textModal").html("O local onde você atirou a flecha não possuia um Wumpus");
 
-  $("#modal1").modal("open");
+    $("#modal1").modal("open");
+  }
 }
 
 

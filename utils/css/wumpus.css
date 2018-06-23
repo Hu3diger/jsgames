@@ -1,13 +1,45 @@
+
 body {
+  background-color: #81F499;
+}
+
+#canvas {
   margin: 0;
   display: flex;
   padding-top: 2%;
 
-  /* This centers our sketch horizontally. */
   justify-content: center;
 
-  /* This centers our sketch vertically. */
   align-items: center;
+}
 
-  background-color: #81F499;
+.arrow-number {
+  font-size: 20px;
+}
+.arrow-img img {
+  padding: 77px 0 !important;
+  width: 70%;
+  vertical-align: middle;
+  margin-bottom: 0.15em;
+}
+
+.clue {
+  padding: 70px 0 !important;
+  font-size: 18px;
+}
+.keys {
+  padding: 2% 0 !important;
+  text-align: center;
+}
+
+.keys img{
+  width: 30%;
+  margin-top: 1%;
+  /* margin-left: -2%; */
+}
+
+
+#reset {
+  margin-top: 5%;
+  float: left !important;
 }
