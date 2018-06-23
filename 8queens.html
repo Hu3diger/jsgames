@@ -1,13 +1,40 @@
 <html lang="pt-br">
 	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>8 Queens</title>
 		<link rel="stylesheet" type="text/css" href="utils/css/estilo.css">
 	</head>
 	<body>
+		<div id="color">
+			<label class="switch">
+			  <input onclick="trocarCor()" type="checkbox" checked>
+			  <span class="slider round"></span>
+			</label>
+		</div>
 		<div class="container">
 			<table id="jogo">
 			</table>
 		</div>
+		<h1>A sua missão no jogo das oito rainhas (8 Queens) é colocar oito rainhas no tabuleiro sem que elas sejam colocadas no mesmo caminho de outras.</h1>
 	<script src="utils/js/main.js"></script>
+	<script>
+	function trocarCor(){
+		if(document.getElementsByTagName("input")[0].checked){
+			document.getElementsByTagName("body")[0].style.background = 'grey';
+			for(var i = 0; i < 64 ; i++){
+				if(document.getElementsByTagName("td")[i].className === "cinza"){
+					document.getElementsByTagName("td")[i].className = "preto";
+					document.getElementsByTagName("body")[0].style.background = 'white';
+				} else if(document.getElementsByTagName("td")[i].className === "preto")  {
+					document.getElementsByTagName("td")[i].className = "cinza";
+					document.getElementsByTagName("body")[0].style.background = 'white';
+				}
+			}
+		} else {
+			document.getElementsByTagName("body")[0].style.background = 'lightblue';
+		}
+	}
+	</script>
 	</body>
 </html>

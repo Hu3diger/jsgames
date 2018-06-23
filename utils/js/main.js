@@ -10,7 +10,14 @@
 	var cols = 8;
 	var rainha = document.createElement("img");
 	
-	document.addEventListener("DOMContentLoaded", function() {
+	function trocarCor(){
+		if(document.getElementsByTagName("input")[0].checked){
+			document.getElementsByTagName("body")[0].style.background = 'grey';
+		}
+	}
+
+	document.addEventListener("DOMContentLoaded", function(){
+		document.getElementsByTagName("body")[0].style.background = 'white';
 		criarTabela();
 		inicializarTabela();
 	});
@@ -34,7 +41,7 @@
 				if ((y % 2) === (x % 2)) {
 					tabelaCell.className = "branco";
 				} else {
-					tabelaCell.className = "preto";
+					tabelaCell.className = "cinza";
 				}
 				tabelaRow.appendChild(tabelaCell);
 				quadrados[x][y] = new Quadrados(x, y, tabelaCell);
@@ -48,7 +55,7 @@
 		queenImage.src = "utils/images/queen.png";
 		queenImage.classList.add("queen");
 		queenImage.style.width='100%';
-		queenImage.style.height='100%';
+		queenImage.style.height='95%';
 		cell.appendChild(queenImage);
 	}
 	
@@ -67,25 +74,24 @@
 	}
 	
 	function aoCliqueDoQuadrado() {
-	var cols = this.cellIndex;
-	var rows = this.parentNode.rowIndex;
-	
-	var square = quadrados[cols][rows]; //Posicao da Rainha
-	if (square.temRainha) { 			//Modo remover (quadrado, bool)
-		square.temRainha = false;
-		//rainhasUtilizadas--;
-		removerRainhaTabelaCell(square.tabelaCell);
-		setQuadradosDominados(square, true);
-	} else { 							//Adicionar
-		square.temRainha = true;
-		//rainhasUtilizadas++;
-		addRainhaTabelaCell(square.tabelaCell);
-		setQuadradosDominados(square);
-	}
-	//updateQueensUsedHTML();
-	if (verificarSolucao()) {
-		//updateBest();
-		jaFinalizou = true;
+		var cols = this.cellIndex;
+		var rows = this.parentNode.rowIndex;
+		
+		var square = quadrados[cols][rows]; 	//Posicao do quadrado clicado
+		if(square.dominado>0 && !square.temRainha){
+			alert("Como ousas!");
+		} else {
+			if (square.temRainha) { 			//Modo remover (quadrado, bool)
+				square.temRainha = false;
+				//rainhasUtilizadas--;
+				removerRainhaTabelaCell(square.tabelaCell);
+				setQuadradosDominados(square, true);
+			} else { 							//Adicionar
+				square.temRainha = true;
+				//rainhasUtilizadas++;
+				addRainhaTabelaCell(square.tabelaCell);
+				setQuadradosDominados(square);
+			}
 		}
 	}
 	
@@ -166,13 +172,31 @@
 }
 
 function atualizarQuadradosDominados() {
+	var completo = 0;
+	var rainhas = 0;
 	for (var row = 0; row < quadrados.length; row++) {
 		for (var column = 0; column < quadrados[row].length; column++) {
 			if (quadrados[row][column].dominado > 0) {
 				quadrados[row][column].tabelaCell.classList.add("dominado");
+				completo++;
+				if(quadrados[row][column].temRainha){
+					rainhas++;
+				}
 			} else {
 				quadrados[row][column].tabelaCell.classList.remove("dominado");
 			}
+		}
+	}
+	if(completo===64){
+		if(rainhas===8){
+			var color = document.getElementsByTagName("body")[0].style.background;
+			document.getElementsByTagName("body")[0].style.background = 'lightgreen';
+			alert("Você venceu!");
+			setTimeout(function(){ document.getElementsByTagName("body")[0].style.background = color; }, 2200);
+			setTimeout(function(){ window.location.reload(); }, 3000);
+		} else {
+			alert("Completou com " +rainhas +" rainhas");
+			setTimeout(function(){ window.location.reload(); }, 900);
 		}
 	}
 }
