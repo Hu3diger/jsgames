@@ -7,13 +7,13 @@ var charUp, charLeft, charDown, charRigth;
 
 function preload() {
 
-  img = loadImage('/utils/images/wumpus.gif');
-  font = loadFont('/utils/fonts/8-bit/PressStart2P-Regular.ttf')
+  img = loadImage('utils/images/wumpus.gif');
+  font = loadFont('utils/fonts/8-bit/PressStart2P-Regular.ttf')
 
-  charUp = loadImage('/utils/images/wumpus/player_facing_to_up.png');
-  charLeft = loadImage('/utils/images/wumpus/player_facing_to_left.png');
-  charDown = loadImage('/utils/images/wumpus/player_facing_to_down.png');
-  charRigth = loadImage('/utils/images/wumpus/player_facing_to_right.png');
+  charUp = loadImage('utils/images/wumpus/player_facing_to_up.png');
+  charLeft = loadImage('utils/images/wumpus/player_facing_to_left.png');
+  charDown = loadImage('utils/images/wumpus/player_facing_to_down.png');
+  charRigth = loadImage('utils/images/wumpus/player_facing_to_right.png');
 }
 
 var NavPages = function() {
